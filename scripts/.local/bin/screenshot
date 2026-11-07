@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+set -e
+
+SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+mkdir -p "$SCREENSHOT_DIR"
+
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+OUTPUT="$SCREENSHOT_DIR/Screenshot_$TIMESTAMP.png"
+
+usage() {
+    echo "Usage: screenshot {full|window|region}"
+    echo
+    echo "Modes:"
+    echo "  full      Capture the entire screen"
+    echo "  window    Capture the focused window"
+    echo "  region    Select a region interactively"
+    exit 1
+}
+
+capture() {
+    grim "$@" "$OUTPUT"
+
+    # Copy image to Wayland clipboard
+    wl-copy --type image/png < "$OUTPUT"
+
+    notify-send \
+        -i "$OUTPUT" \
+        "Screenshot captured" \
+        "$(basename "$OUTPUT")"
+}
+
+# Prints the focused window as "x,y WxH" (the format grim -g expects).
+# Returns non-zero if the current compositor isn't supported.
+get_focused_geometry() {
+    if [[ -n "$SWAYSOCK" ]] && command -v swaymsg >/dev/null 2>&1; then
+        # Sway
+        swaymsg -t get_tree | \
+            jq -r '.. | select(.focused? == true) |
+            "\(.rect.x),\(.rect.y) \(.rect.width)x\(.rect.height)"' | \
+            head -n 1
+
+    elif [[ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]] && command -v hyprctl >/dev/null 2>&1; then
+        # Hyprland (prints nothing if no window is focused)
+        hyprctl activewindow -j | \
+            jq -r 'select(.address != null) |
+            "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"'
+
+    elif command -v mmsg >/dev/null 2>&1; then
+        # Mango (mmsg ships with it). Prints nothing if no window is focused.
+        mmsg get focusing-client 2>/dev/null | \
+            jq -r 'select(.x != null) |
+            "\(.x),\(.y) \(.width)x\(.height)"'
+
+    else
+        return 1
+    fi
+}
+
+select_region() {
+    local geometry
+    geometry=$(slurp || true)
+
+    # User pressed Escape / cancelled selection
+    if [[ -z "$geometry" ]]; then
+        exit 0
+    fi
+
+    capture -g "$geometry"
+}
+
+case "$1" in
+
+    full)
+        capture
+        ;;
+
+    window)
+        sleep 2
+
+        if GEOMETRY=$(get_focused_geometry); then
+            if [[ -z "$GEOMETRY" || "$GEOMETRY" == "null" ]]; then
+                notify-send "Screenshot error" "Could not determine focused window."
+                exit 1
+            fi
+            capture -g "$GEOMETRY"
+        else
+            # Compositor has no supported way to query the focused window.
+            notify-send "Screenshot" "Window mode isn't supported here. Select a region instead."
+            select_region
+        fi
+        ;;
+
+    region)
+        select_region
+        ;;
+
+    *)
+        usage
+        ;;
+
+esac
