@@ -79,7 +79,6 @@ bindsym $mod+i inhibit_idle open
 
 # i3lock-color binding
 #bindsym $mod+o exec --no-startup-id /home/not_illusionaire/.config/i3lock-color/lock
-bindsym $mod+o exec hyprlock
 
 # start a terminal
 bindsym $mod+Return exec alacritty
@@ -102,17 +101,22 @@ bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ t
 bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 set $ipc noctalia msg
+set $qsmenu qs -c menus ipc call
+
 #################################
 ##### MENU LAUNCHERS ############
 #################################
+
+
 # Rofi app launcher
 bindsym $mod+d exec --no-startup-id rofi -show drun
-bindsym $mod+p exec qs -c menus ipc call wallpaper toggle
-bindsym $mod+Shift+x exec qs -c menus ipc call power toggle
+bindsym $mod+p exec $qsmenu wallpaper toggle
+bindsym $mod+Shift+x exec $qsmenu power toggle
 bindsym $mod+x exec $ipc panel-toggle control-center
 bindsym $mod+z exec $ipc wifi-toggle
 bindsym $mod+c exec $ipc bluetooth-toggle
-bindsym $mod+m exec qs -c menus ipc call live toggle
+bindsym $mod+m exec $qsmenu live toggle
+bindsym $mod+o exec $ipc session lock
 
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
