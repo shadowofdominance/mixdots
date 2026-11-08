@@ -159,7 +159,7 @@ alias zou="source ~/.zshrc"
 alias swayconf="nvim ~/.config/sway/config"
 alias wayconf="nvim ~/.config/waybar/config.jsonc"
 alias niriconf="nvim ~/.config/niri/config.kdl"
-alias mangoconf="nvim ~/.config/mango/keybind.conf"
+alias mangoconf="nvim ~/.config/mango/"
 
 # fastfetch
 fastfetch --logo .config/fastfetch/asciiart.txt
