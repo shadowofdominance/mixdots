@@ -137,7 +137,7 @@ window-rule {
 binds {
    Mod+Shift+Slash { show-hotkey-overlay; }
 
-   Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+   Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun"; }
    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
@@ -309,7 +309,7 @@ binds {
 
     //// Clashed with a default, so moved ////
     Mod+Alt+L { spawn "noctalia" "msg" "session" "lock"; }                // sway Mod+O (default: overview)
-    Mod+Alt+D { spawn "rofi" "-show" "drun"; }     // sway Mod+D (default: fuzzel)
+    // Mod+Alt+D { spawn "rofi" "-show" "drun"; }     // sway Mod+D (default: fuzzel)
     Mod+Alt+C { spawn "noctalia" "msg" "bluetooth-toggle"; }  // sway Mod+C (default: center-column)
     Mod+Alt+M { spawn "qs" "-c" "menus" "ipc" "call" "live" "toggle"; }  // sway Mod+M (default: maximize-to-edges)
 
