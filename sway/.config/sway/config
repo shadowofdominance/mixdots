@@ -73,7 +73,7 @@ exec swayidle -w \
 #################################
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 # bindsym $mod+Shift+b bar mode toggle
 bindsym $mod+i inhibit_idle open
 
