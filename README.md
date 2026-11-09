@@ -11,6 +11,8 @@ Everything is managed with [GNU Stow](https://www.gnu.org/software/stow/), so yo
 - Also for live wallpapers you will need to install [mpvpaper](https://github.com/GhostNaN/mpvpaper.git)
 
 ## Screenshots
+The look and feel are the same across all three wayland compositors!
+
 ![Screenshot 1](Screenshot_2026-11-09_11-41-56.png)
 
 ![Screenshot 1](Screenshot_2026-11-09_11-43-16.png)
