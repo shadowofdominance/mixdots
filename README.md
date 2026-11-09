@@ -6,7 +6,9 @@ Everything is managed with [GNU Stow](https://www.gnu.org/software/stow/), so yo
 
 > **Heads up:** the **keybinds are personal**. They match how I work, not a sensible default, so read them before you rely on them. See [Keybinds](#keybinds-are-personal).
 
-<!-- Add screenshots here, e.g. ![Mango](screenshots/mango.png) -->
+## Screenshots
+![Screenshot 1](Screenshot_2026-11-09_11-41-56.png)
+
 
 ## What's included
 
@@ -151,11 +153,3 @@ Feel free to fork, copy and remix any part of this. To make it yours:
 Before pushing, check that you haven't committed secrets such as API keys or tokens (`.zshrc` is a common place for them).
 
 Issues and pull requests are welcome, especially fixes for other distros.
-
-## License
-
-Add a license file (MIT is a common choice for dotfiles) so others know how they can reuse this.
-
-## Credits
-
-Built on the work of the [Sway](https://swaywm.org), [Mango](https://github.com/mangowm/mango), [Niri](https://github.com/YaLTeR/niri), [Quickshell](https://quickshell.org) and Noctalia projects.
