@@ -9,6 +9,12 @@ Everything is managed with [GNU Stow](https://www.gnu.org/software/stow/), so yo
 ## Screenshots
 ![Screenshot 1](Screenshot_2026-11-09_11-41-56.png)
 
+![Screenshot 1](Screenshot_2026-11-09_11-43-16.png)
+
+![Screenshot 1](Screenshot_2026-11-09_11-50-16.png)
+
+## Wallpapers
+This drive contains both normal and live wallpapers. Check it out here: [Drive](https://drive.google.com/drive/folders/1slLrhKetXEdo1SQeq2IUI--Kul9Fv59T?usp=drive_link)
 
 ## What's included
 
