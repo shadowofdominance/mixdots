@@ -6,6 +6,10 @@ Everything is managed with [GNU Stow](https://www.gnu.org/software/stow/), so yo
 
 > **Heads up:** the **keybinds are personal**. They match how I work, not a sensible default, so read them before you rely on them. See [Keybinds](#keybinds-are-personal).
 
+## Wallpapers
+- This drive contains both normal and live wallpapers. Check it out here: [Drive](https://drive.google.com/drive/folders/1slLrhKetXEdo1SQeq2IUI--Kul9Fv59T?usp=drive_link)
+- Also for live wallpapers you will need to install [mpvpaper](https://github.com/GhostNaN/mpvpaper.git)
+
 ## Screenshots
 ![Screenshot 1](Screenshot_2026-11-09_11-41-56.png)
 
@@ -13,8 +17,6 @@ Everything is managed with [GNU Stow](https://www.gnu.org/software/stow/), so yo
 
 ![Screenshot 1](Screenshot_2026-11-09_11-50-16.png)
 
-## Wallpapers
-This drive contains both normal and live wallpapers. Check it out here: [Drive](https://drive.google.com/drive/folders/1slLrhKetXEdo1SQeq2IUI--Kul9Fv59T?usp=drive_link)
 
 ## What's included
 
