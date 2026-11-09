@@ -88,6 +88,25 @@ I use these configs daily, and the keybinds are tuned to my habits and my keyboa
 
 Change them freely. They are plain text, and because the files are symlinked, your edits are tracked by git.
 
+Also here are some common keybinds across all three wms:
+
+| **Keybind** | **Function** |
+|---|---|
+| **SUPER+Return** | Spawns terminal(alacritty by default) |
+| **SUPER+Q** | Quits selected window |
+| **SUPER+SHIFT+E** | Exits current session |
+
+And here are some quick commands for configuration(if you used my .zshrc)
+
+| **Command** | **Function** |
+|---|---|
+| **zshconf** | Opens .zshrc configuration inside neovim |
+| **niriconf** | Opens niri configuration inside neovim |
+| **mangoconf** | Opens mango configuration inside neovim |
+| **swayconf** | Opens sway configuration inside neovim |
+
+For more commands run zshconf you will find aliases at the end of the .zshrc
+
 ## Set up your monitors
 
 Monitor setup is machine-specific, so edit it for your hardware. Run `wlr-randr` inside a session to get output names (like `eDP-1` or `HDMI-A-1`), then set them in your WM config.
