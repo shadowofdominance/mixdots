@@ -1,0 +1,44 @@
+#!/bin/bash
+# Rofi launcher with a random banner image.
+#   launcher.sh                 -> rofi -show drun
+#   launcher.sh -show run       -> any other rofi arguments work too
+#
+# Pictures come from ~/Pictures/RofiBanners (override: ROFI_IMAGES=/some/dir).
+# Any image works: it is centre-cropped to the panel shape once and cached,
+# so later launches are instant.
+
+DIR="${ROFI_IMAGES:-$HOME/.config/rofi/RofiBanners/}"
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/rofi-banner"
+W=600      # 2x the panel size in config.rasi (300 x 450), keep the same ratio
+H=900
+mkdir -p "$CACHE"
+
+IMG="$(find "$DIR" -maxdepth 2 -type f \
+        \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+        2>/dev/null | shuf -n 1)"
+
+THEME_STR=""
+if [ -n "$IMG" ]; then
+    KEY="$(printf '%s' "$IMG" | md5sum | cut -d' ' -f1)"
+    OUT="$CACHE/$KEY-${W}x${H}.jpg"
+
+    if [ ! -f "$OUT" ]; then
+        if command -v ffmpeg >/dev/null 2>&1; then
+            ffmpeg -nostdin -loglevel error -y -i "$IMG" \
+                -vf "scale=${W}:${H}:force_original_aspect_ratio=increase,crop=${W}:${H}" \
+                -frames:v 1 -q:v 2 "$OUT" 2>/dev/null
+        elif command -v magick >/dev/null 2>&1; then
+            magick "$IMG" -resize "${W}x${H}^" -gravity center -extent "${W}x${H}" "$OUT"
+        elif command -v convert >/dev/null 2>&1; then
+            convert "$IMG" -resize "${W}x${H}^" -gravity center -extent "${W}x${H}" "$OUT"
+        fi
+    fi
+
+    [ -f "$OUT" ] && THEME_STR="imagebox { background-image: url(\"$OUT\", both); }"
+fi
+
+if [ $# -eq 0 ]; then
+    set -- -show drun
+fi
+
+exec rofi "$@" -theme-str "$THEME_STR"

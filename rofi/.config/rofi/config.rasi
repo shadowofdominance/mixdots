@@ -1,14 +1,20 @@
 /*
- * Rofi launcher, styled to match the Quickshell menus (Dracula + #BD93F9 accent).
- * Keep the colours / font / radii in sync with ~/.config/quickshell/menus/config/Style.qml
- * Put this file at ~/.config/rofi/config.rasi
+ * Rofi launcher with a random banner image on the left (Dracula, soft corners).
+ * Start it with launcher.sh (it picks the random image); plain `rofi -show drun`
+ * also works, you just get an empty image panel.
+ *
+ * Install:  ~/.config/rofi/config.rasi  and  ~/.config/rofi/launcher.sh
+ * Layout maths (keep in sync with launcher.sh):
+ *   window height 480 - padding 2*14 - border 2*1  = 450 px
+ *   image panel 300 x 450  ->  launcher.sh crops images to 600 x 900 (2x, sharp on HiDPI)
  */
 
 configuration {
     modi:                 "drun";
     show-icons:           true;
-    display-drun:         ">";
+    display-drun:         " Apps";
     drun-display-format:  "{name}";
+    matching:             "fuzzy";
     disable-history:      false;
     hover-select:         true;
     me-select-entry:      "";
@@ -16,7 +22,7 @@ configuration {
 }
 
 * {
-    /* palette (same values as Style.qml) */
+    /* palette, same values as Style.qml */
     bg:           #282A36;
     bg-panel:     #282A36EB;
     surface:      #44475A;
@@ -30,7 +36,7 @@ configuration {
     red-soft:     #FF55552E;
     outline:      #F8F8F21F;
 
-    font:             "JetBrainsMono Nerd Font 12";
+    font:             "JetBrainsMono Nerd Font 11";
     background-color: transparent;
     text-color:       @fg;
 }
@@ -38,7 +44,8 @@ configuration {
 window {
     location:         center;
     anchor:           center;
-    width:            640px;
+    width:            900px;
+    height:           480px;
     padding:          14px;
     background-color: @bg-panel;
     border:           1px;
@@ -47,35 +54,70 @@ window {
 }
 
 mainbox {
-    spacing:  12px;
-    children: [ inputbar, message, listview ];
+    orientation: horizontal;
+    spacing:     14px;
+    children:    [ imagebox, content ];
 }
 
-/* ---------- search bar ---------- */
+/* ---------- left: banner image (set by launcher.sh) ---------- */
+imagebox {
+    expand:           false;
+    width:            300px;
+    background-color: @surface;
+    border-radius:    14px;
+    children:         [ dummy ];
+}
+
+dummy {
+    expand:           true;
+    background-color: transparent;
+}
+
+/* ---------- right: search + list ---------- */
+content {
+    orientation: vertical;
+    spacing:     12px;
+    children:    [ inputbar, message, listview ];
+}
+
 inputbar {
     spacing:          12px;
-    padding:          12px 16px;
+    padding:          10px 12px;
     background-color: @surface-soft;
     border:           1px;
     border-color:     @outline;
     border-radius:    12px;
-    children:         [ prompt, entry ];
+    children:         [ prompt, entry, num-filtered-rows, textbox-num-sep, num-rows ];
 }
 
 prompt {
-    text-color:     @accent;
-    font:           "JetBrainsMono Nerd Font 14";
-    vertical-align: 0.5;
+    padding:          4px 12px;
+    background-color: @accent;
+    text-color:       @bg;
+    border-radius:    8px;
+    vertical-align:   0.5;
 }
 
 entry {
-    placeholder:       "Search apps…";
+    placeholder:       "Launch application…";
     placeholder-color: @muted;
     text-color:        @fg;
     vertical-align:    0.5;
 }
 
-/* ---------- messages ---------- */
+num-filtered-rows, num-rows {
+    expand:         false;
+    text-color:     @muted;
+    vertical-align: 0.5;
+}
+
+textbox-num-sep {
+    expand:         false;
+    str:            "/";
+    text-color:     @muted;
+    vertical-align: 0.5;
+}
+
 message {
     padding:          10px 14px;
     background-color: @surface-soft;
@@ -86,11 +128,11 @@ textbox {
     text-color: @fg;
 }
 
-/* ---------- list ---------- */
 listview {
-    lines:        8;
+    expand:       true;
+    lines:        7;
     columns:      1;
-    fixed-height: false;
+    fixed-height: true;
     dynamic:      true;
     cycle:        true;
     scrollbar:    false;
@@ -98,7 +140,7 @@ listview {
 }
 
 element {
-    padding:       8px 12px;
+    padding:       6px 12px;
     spacing:       14px;
     border:        1px;
     border-color:  transparent;
@@ -107,7 +149,7 @@ element {
 }
 
 element-icon {
-    size:             2.2em;
+    size:             2em;
     background-color: transparent;
 }
 
@@ -133,7 +175,6 @@ element alternate.active {
     text-color: @accent;
 }
 
-/* selected row: soft accent fill + thin accent outline (same as the Quickshell list rows) */
 element selected.normal {
     background-color: @accent-soft;
     border-color:     @accent-line;
